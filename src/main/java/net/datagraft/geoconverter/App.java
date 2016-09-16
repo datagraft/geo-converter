@@ -1,4 +1,4 @@
-package net.datagraft.GeoConverter;
+package net.datagraft.geoconverter;
 
 import java.io.IOException;
 

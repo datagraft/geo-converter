@@ -2,7 +2,9 @@ package net.datagraft.geoconverter;
 
 import java.io.IOException;
 
+import net.datagraft.exception.MissingShapeFileException;
 import net.datagraft.shape.GeoShape;
+import net.datagraft.shape.GeoShapeFromZip;
 
 /**
  * Main class to run the application
@@ -14,10 +16,14 @@ public class App
     {
     	
     	try {
-			GeoShape shape = new GeoShape("F:\\SintefGitRepo\\datagraft\\GeoConverter\\src\\test\\data\\50m_cultural\\ne_50m_admin_0_boundary_lines_land.shp");
+    		GeoShapeFromZip shape = new GeoShapeFromZip("F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\ENP.zip");
 			String str =shape.convertToCSV();
 			System.out.println(str);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    	catch (MissingShapeFileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

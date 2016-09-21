@@ -16,13 +16,13 @@ import org.opengis.feature.simple.SimpleFeature;
 
 /**
  * Represents a Shape File, by default it supports .shp files for now.
- * User is required to have the .shx file also in the same directory as .shp file. 
+ * User is required to have the .shx file also in the same directory as .shp file.
  * 
  * As an alternative use {@link GeoShapeFromZip} to process .zip file
  * @author nive
  *
  */
-public class GeoShape extends ShapefileDataStore{
+public class GeoShape extends ShapefileDataStore implements Shapeable{
 	
 	// corresponding CSV value
 	private StringBuffer csvValue;

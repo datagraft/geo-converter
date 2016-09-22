@@ -16,7 +16,7 @@ public class App
     {
     	
     	try {
-    		GeoShapeFromZip shape = new GeoShapeFromZip("F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\ENP.zip");
+    		GeoShapeFromZip shape = new GeoShapeFromZip("F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\NOR_adm_shp.zip");
 			String str =shape.convertToCSV();
 			System.out.println(str);
 		} catch (IOException e) {

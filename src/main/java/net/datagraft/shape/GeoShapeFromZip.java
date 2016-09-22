@@ -24,8 +24,8 @@ public class GeoShapeFromZip implements Shapeable {
 	private GeoShape shape;
 	private ZipInputStream zipIn;
 	private static final int BUFFER_SIZE = 4096;
-	private File destDir = new File(
-			"F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\tes");
+	private static File TEMP_DIR_TO_EXTRACT = new File(
+			"F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\TMP");
 
 	/**
 	 * @param filePath
@@ -35,19 +35,21 @@ public class GeoShapeFromZip implements Shapeable {
 	public GeoShapeFromZip(String filePath) throws IOException,
 			MissingShapeFileException {
 		 // hard coded. should discuss about a location 
-		if (!destDir.exists()) {
-			destDir.mkdir();
+		
+		File inputFile = new File(filePath);
+		File destination =new File(TEMP_DIR_TO_EXTRACT.getAbsolutePath() + File.separator+ inputFile.getName());
+		if (!destination.exists()) {
+			destination.mkdir();
 		}
-		File file = new File(filePath);
-		this.zipIn = new ZipInputStream(new FileInputStream(file));
+		this.zipIn = new ZipInputStream(new FileInputStream(inputFile));
 
 		ZipEntry shapeFile = null;
 
 		ZipEntry entry = zipIn.getNextEntry();
+		
 		// iterates over entries in the zip file
 		while (entry != null) {
-			String destPath = destDir.getAbsolutePath() + File.separator
-					+ entry.getName();
+			String destPath = destination.getAbsolutePath()+File.separator+ entry.getName();
 			if (!entry.isDirectory()) {
 				// if the entry is a file, extracts it
 				extractFile(zipIn, destPath);
@@ -66,7 +68,7 @@ public class GeoShapeFromZip implements Shapeable {
 			throw new MissingShapeFileException(
 					"Shape file not found. Compressed file should contain .shp file");
 		}
-		this.shape = new GeoShape(destDir.getAbsolutePath() + "\\"
+		this.shape = new GeoShape(destination.getAbsolutePath() +File.separator
 				+ shapeFile.getName());
 		zipIn.close();
 
@@ -103,7 +105,6 @@ public class GeoShapeFromZip implements Shapeable {
 	 */
 	public String convertToCSV() throws IOException {
 		String csv = this.shape.convertToCSV();
-		System.out.println(csv);
 		this.zipIn.close();
 		return csv;
 	}
@@ -120,7 +121,7 @@ public class GeoShapeFromZip implements Shapeable {
 	
 	@Override
 	protected void finalize() throws Throwable {
-		destDir.deleteOnExit();
+		TEMP_DIR_TO_EXTRACT.deleteOnExit();
 		super.finalize();
 	}
 

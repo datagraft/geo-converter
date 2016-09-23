@@ -15,7 +15,7 @@ public class App
     {
     	
     	try {
-    		GeoShapeFromZip shape = new GeoShapeFromZip("F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\ENP.zip");
+    		GeoShapeFromZip shape = new GeoShapeFromZip("F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\test\\ShpToCsv\\ShpToCsv\\shapefiles\\ZEPA.zip");
     		
 			String str =shape.writeCSV();
 			System.out.println(str);
@@ -28,10 +28,7 @@ public class App
 			e.printStackTrace();
 		} 
     	System.out.println("Exiting");
-//    	catch (MissingShapeFileException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
     }
     
     

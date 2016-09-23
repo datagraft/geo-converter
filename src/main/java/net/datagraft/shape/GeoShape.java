@@ -20,7 +20,7 @@ import org.opengis.feature.simple.SimpleFeature;
  * Represents a Shape File, by default it supports .shp files for now. User is
  * required to have the .shx file also in the same directory as .shp file.
  * 
- * As an alternative use {@link GeoShapeFromZip} to process .zip file
+ * As an alternative use {@link GeoShapeFromZip} to process a .zip file
  * 
  * @author nive
  *
@@ -99,6 +99,13 @@ public class GeoShape implements Shapeable {
 		return vectorForm;
 	}
 
+	/**
+	 * Converts shape file and write the {@link CSV} content in given destination path. 
+	 * Uses default {@link CSV} for conversion.
+	 * @param destinationPath
+	 * @return absolute path of written {@link CSV} file
+	 * @throws IOException
+	 */
 	public String writeCSV(File destinationPath) throws IOException {
 
 		String dest_filename = getFileNameWithoutExtension(this.sourceFile)
@@ -116,7 +123,7 @@ public class GeoShape implements Shapeable {
 
 
 	/**
-	 * Converts geo data into corresponding CSV format using custom {@link CSV}
+	 * Converts geo data into corresponding CSV format custom {@link CSV}
 	 * format
 	 * 
 	 * @param csv
@@ -135,27 +142,33 @@ public class GeoShape implements Shapeable {
 			while (simpleFeatureIterator.hasNext()) {
 				f = simpleFeatureIterator.next();
 
+				// iterate through all properties of a feature
 				for (Property prop : f.getProperties()) {
 					propertyStr.append(prop.getValue().toString());
 					propertyStr.append(csv.getDelimiter());
 
+					//create header string
 					if (!headerAttached) {
 						headerStr.append(prop.getType().getName());
 						headerStr.append(csv.getDelimiter());
 					}
 				}
+				//add header
 				if (!headerAttached) {
 					fullContent.append(headerStr.toString());
 					fullContent.append(csv.getNewLine());
 					headerAttached = true;
 					headerStr = null;
 				}
+				//add csv value of each property
 				fullContent.append(propertyStr.toString());
 				fullContent.append(csv.getNewLine());
+				//reset property value, this avoids creation of new StringBuilder object for each property
 				propertyStr.delete(0, propertyStr.length());
 			}
 
 		} finally {
+			// close opened resources
 			simpleFeatureIterator.close();
 			store.dispose();
 		}
@@ -178,11 +191,12 @@ public class GeoShape implements Shapeable {
 		return convertToCSV(new CSV(delimiter, quote, newLine));
 	}
 
-	public String saveAsCSV() throws IOException {
-		return this.writeCSV(TEMP_DIR_TO_EXTRACT);
-	}
-
-	public static String getFileNameWithoutExtension(File f) {
+	/**
+	 * Returns a filename without its extension
+	 * @param fileName 
+	 * @return file name without extension
+	 */
+	private static String getFileNameWithoutExtension(File f) {
 		String s = "";
 		int index = f.getName().lastIndexOf('.');
 		if (index > 0 && index <= f.getName().length() - 2) {

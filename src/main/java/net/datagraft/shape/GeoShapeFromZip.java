@@ -13,8 +13,10 @@ import java.util.zip.ZipInputStream;
 import net.datagraft.exception.MissingShapeFileException;
 
 /**
- * Wrapper of {@link GeoShape} Represents a Shape File, when a .zip file is
+ * Wrapper of {@link GeoShape} Extracts a Shape File, when a .zip file is
  * provided.
+ * The compressed file should contain .shp and .shx files compressed together in same location
+ * Currently supports .zip file.
  * 
  * @author nive
  *
@@ -26,9 +28,15 @@ public class GeoShapeFromZip implements Shapeable {
 	private static final int BUFFER_SIZE = 4096;
 	
 	private File extractedLocation;
-
+	
 	/**
-	 * @param filePath
+	 * Allows object creation using parameterized constructor only
+	 */
+	private GeoShapeFromZip(){}
+	
+	/**
+	 * Constructor
+	 * @param absolute filePath of compressed file
 	 * @throws IOException
 	 * @throws MissingShapeFileException
 	 */
@@ -36,16 +44,19 @@ public class GeoShapeFromZip implements Shapeable {
 			MissingShapeFileException {
 		shapes = new ArrayList<GeoShape>();
 		File inputFile = new File(filePath);
+		
+		//create destination location
 		extractedLocation = new File(TEMP_DIR_TO_EXTRACT.getAbsolutePath()
 				+ File.separator + inputFile.getName());
 		if (!extractedLocation.exists()) {
 			extractedLocation.mkdir();
 		}
+		// open Zip file
 		ZipInputStream zipIn = new ZipInputStream(new FileInputStream(inputFile));
 
 		ZipEntry entry = zipIn.getNextEntry();
 
-		// iterates over entries in the zip file
+		// extracts all files inside zip file
 		while (entry != null) {
 			String destPath = extractedLocation.getAbsolutePath() + File.separator
 					+ entry.getName();
@@ -61,16 +72,20 @@ public class GeoShapeFromZip implements Shapeable {
 			entry = zipIn.getNextEntry();
 		}
 		
-
+		// create Shape object for extracted shape files
 		File[] files = extractedLocation.listFiles(); 
 		for(File file: files)
 		{
 			if(file.getName().endsWith(".shp"))
 			{
-				System.out.println(file.getName());
 				GeoShape shape = new GeoShape(file.getAbsolutePath());
 				shapes.add(shape);
 			}
+		}
+		// throws an exception if no .shp files are found
+		if(shapes.isEmpty())
+		{
+			throw new MissingShapeFileException("Compressed file should contain atleast on .shp file");
 		}
 		
 		zipIn.close();
@@ -127,12 +142,12 @@ public class GeoShapeFromZip implements Shapeable {
 		return csv.toString();
 	}
 
-	@Override
-	protected void finalize() throws Throwable {
-		TEMP_DIR_TO_EXTRACT.deleteOnExit();
-	}
 
-
+	/**
+	 * Converts all .shp files in the compressed folder and writes corresponding csv files
+	 * @return
+	 * @throws IOException
+	 */
 	public String writeCSV() throws IOException {
 		
 		for(GeoShape shape : shapes)

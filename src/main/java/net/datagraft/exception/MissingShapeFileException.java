@@ -12,7 +12,6 @@ public class MissingShapeFileException extends Exception {
 	public MissingShapeFileException() {
 	}
 
-	// Constructor that accepts a message
 	public MissingShapeFileException(String message) {
 		super(message);
 	}

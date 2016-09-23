@@ -1,15 +1,15 @@
 package net.datagraft.shape;
 
+import java.io.File;
 import java.io.IOException;
-
-import org.geotools.data.simple.SimpleFeatureIterator;
 
 public interface Shapeable {
 	
-	public SimpleFeatureIterator getRecords() throws IOException;
+	 File TEMP_DIR_TO_EXTRACT = new File(
+			"F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\TMP");
+	 String convertToCSV() throws IOException;
 	
-	public String convertToCSV() throws IOException;
-	
-	public String convertToCSV(String delimiter, String quote, String newLine) throws IOException;
+	 String convertToCSV(String delimiter, String quote, String newLine) throws IOException;
+	 
 	
 }

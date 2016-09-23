@@ -1,5 +1,8 @@
 package net.datagraft.convert;
 
+import org.opengis.feature.Property;
+import org.opengis.feature.simple.SimpleFeature;
+
 /**
  * CSV hander
  * 
@@ -54,6 +57,20 @@ public class CSV {
 			out.append(escape(str));
 		}
 
+		return out.toString();
+	}
+	
+	/**
+	 * Encodes {@link SimpleFeature} into {@link CSV} form 
+	 * @param iterable
+	 * @return CSV String
+	 */
+	public String encode(final SimpleFeature feature) {
+		StringBuilder out = new StringBuilder();
+		for (Property p : feature.getProperties()) {
+			out.append(p.getValue().toString());
+			out.append(this.delimiter);
+		}
 		return out.toString();
 	}
 

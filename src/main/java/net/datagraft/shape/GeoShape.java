@@ -112,11 +112,12 @@ public class GeoShape implements Shapeable {
 				+ ".csv";
 		String destAbsolutePath = destinationPath.getAbsolutePath()
 				+ File.separator + dest_filename;
-
+			//TODO change this to stream writer
 		FileWriter writter = new FileWriter(destAbsolutePath);
 		BufferedWriter bw = new BufferedWriter(writter);
 		bw.write(convertToCSV());
 		bw.close();
+		
 
 		return destAbsolutePath;
 	}

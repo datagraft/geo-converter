@@ -150,11 +150,16 @@ public class GeoShapeFromZip implements Shapeable {
 	 */
 	public String writeCSV() throws IOException {
 		
-		for(GeoShape shape : shapes)
-		{
-			shape.writeCSV(extractedLocation);
-		}
-		return extractedLocation.getAbsolutePath();
+//		for(GeoShape shape : shapes)
+//		{
+//			shape.writeCSV(GeoShape.TEMP_DIR_TO_EXTRACT);
+//		}
+		//for now support only one .shp, .shx combinatin at a time 
+		//write the csv converted format and return the temp location
+		 String csvPath = shapes.get(0).writeCSV(GeoShape.TEMP_DIR_TO_EXTRACT);
+		 //delete the extracted zip file content
+		 this.extractedLocation.delete();
+		return csvPath;
 	}
 
 }

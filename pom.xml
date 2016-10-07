@@ -2,12 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>net.datagraft</groupId>
-  <artifactId>GeoConverter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>GeoConverter</name>
+  <name>geo-converter</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -41,4 +39,10 @@
             <url>http://download.osgeo.org/webdav/geotools/</url>
         </repository>
     </repositories>
+    <groupId>datagraft</groupId>
+    <artifactId>geo-converter</artifactId>
+    <organization>
+    	<name>datagraft</name>
+    	<url>https://github.com/datagraft</url>
+    </organization>
 </project>

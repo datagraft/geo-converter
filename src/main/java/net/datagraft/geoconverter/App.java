@@ -15,7 +15,7 @@ public class App
     {
     	
     	try {
-    		GeoShapeFromZip shape = new GeoShapeFromZip("F:\\SintefGitRepo\\Graftwerk\\graftwerk-prodm-master\\test\\data\\test\\ShpToCsv\\ShpToCsv\\shapefiles\\ZEPA.zip");
+    		GeoShapeFromZip shape = new GeoShapeFromZip("C:\\Users\\narmi\\AppData\\Local\\Temp\\ring-multipart-7735881700133924913.tmp");
     		
 			String str =shape.writeCSV();
 			System.out.println(str);

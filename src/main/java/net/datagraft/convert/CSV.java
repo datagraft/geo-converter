@@ -11,7 +11,7 @@ import org.opengis.feature.simple.SimpleFeature;
  */
 public class CSV {
 
-	private String delimiter = ",";
+	private String delimiter = ";";
 	private String quote = "\"";
 	private String newLine = "\n";
 

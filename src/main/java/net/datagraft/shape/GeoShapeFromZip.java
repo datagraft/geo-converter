@@ -45,10 +45,10 @@ public class GeoShapeFromZip implements Shapeable {
 		shapes = new ArrayList<GeoShape>();
 		File inputFile = new File(filePath);
 		
+		String name = inputFile.getName().substring(0, inputFile.getName().lastIndexOf('.'));
 		//create destination location
-		extractedLocation = new File(TEMP_DIR_TO_EXTRACT.getAbsolutePath()
-				+ File.separator + inputFile.getName());
-		if (!extractedLocation.exists()) {
+		extractedLocation = new File(inputFile.getParentFile().getAbsolutePath()+File.separator+name);
+		if (!extractedLocation.isDirectory()) {
 			extractedLocation.mkdir();
 		}
 		// open Zip file
@@ -100,6 +100,7 @@ public class GeoShapeFromZip implements Shapeable {
 	 */
 	private void extractFile(ZipInputStream zipIn, String filePath)
 			throws IOException {
+		
 		BufferedOutputStream bos = new BufferedOutputStream(
 				new FileOutputStream(filePath));
 		byte[] bytesIn = new byte[BUFFER_SIZE];
@@ -156,7 +157,7 @@ public class GeoShapeFromZip implements Shapeable {
 //		}
 		//for now support only one .shp, .shx combinatin at a time 
 		//write the csv converted format and return the temp location
-		 String csvPath = shapes.get(0).writeCSV(GeoShape.TEMP_DIR_TO_EXTRACT);
+		 String csvPath = shapes.get(0).writeCSV(this.extractedLocation.getParentFile());
 		 //delete the extracted zip file content
 		 this.extractedLocation.delete();
 		return csvPath;

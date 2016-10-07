@@ -156,13 +156,14 @@ public class GeoShape implements Shapeable {
 				}
 				//add header
 				if (!headerAttached) {
-					fullContent.append(headerStr.toString());
+					
+					fullContent.append(headerStr.toString().substring(0, headerStr.toString().lastIndexOf(csv.getDelimiter())));
 					fullContent.append(csv.getNewLine());
 					headerAttached = true;
 					headerStr = null;
 				}
 				//add csv value of each property
-				fullContent.append(propertyStr.toString());
+				fullContent.append(propertyStr.toString().substring(0, propertyStr.toString().lastIndexOf(csv.getDelimiter())));
 				fullContent.append(csv.getNewLine());
 				//reset property value, this avoids creation of new StringBuilder object for each property
 				propertyStr.delete(0, propertyStr.length());
@@ -170,8 +171,10 @@ public class GeoShape implements Shapeable {
 
 		} finally {
 			// close opened resources
-			simpleFeatureIterator.close();
-			store.dispose();
+			this.simpleFeatureIterator.close();
+			this.store.dispose();
+			this.sourceFile=null;
+			
 		}
 
 		return fullContent.toString();

@@ -1,10 +1,12 @@
 
-#About geo-converter
+# Geo converter
+
 This is a simple utility library to transform Geo files into a compatible CSV format.
 
 This library current has support to extract .shp files into .csv files.
 
-#Usage
+## Usage
+
 Currently, library has two processing classes
 
 * [GeoShape](https://github.com/datagraft/geo-converter/blob/master/src/main/java/net/datagraft/shape/GeoShape.java) : To convert .shp files
@@ -22,7 +24,7 @@ Currently, library has two processing classes
     // writes a csv file		
 	String csvFilePath =shape.writeCSV();
 	``
-#Requirements
+## Requirements
 
 * Java 1.8.x
 * Maven 3.x
@@ -30,3 +32,14 @@ Currently, library has two processing classes
 This is currently under **development**. 
 Current version is released with minimal functional requirements
 
+## Questions or issues?
+
+For posting information about bugs, questions and discussions please use the [Github Issues](https://github.com/datagraft/geo-converter/issues) feature.
+
+## Core Team
+
+- [Nikolay Nikolov](https://github.com/nvnikolov)
+- [Nivethika Mahasivam](https://github.com/nivemaham)
+
+## License
+Available under the [Eclipse Public License](/LICENSE) (v1.0).

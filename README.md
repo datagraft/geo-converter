@@ -32,6 +32,24 @@ Currently, library has two processing classes
 This is currently under **development**. 
 Current version is released with minimal functional requirements
 
+# 🐳 Build
+
+You can build the library using Docker:
+
+```bash
+$ docker build . -t geo-converter
+$ docker run -it --rm -v $(pwd):/mnt geo-converter cp /usr/src/app/target/geo-converter-0.0.1.jar /mnt
+$ docker image rm geo-converter
+```
+
+Or Podman:
+
+```bash
+$ podman build . -t geo-converter
+$ podman run -it --rm -v $(pwd):/mnt geo-converter cp /usr/src/app/target/geo-converter-0.0.1.jar /mnt
+$ podman image rm geo-converter
+```
+
 ## Questions or issues?
 
 For posting information about bugs, questions and discussions please use the [Github Issues](https://github.com/datagraft/geo-converter/issues) feature.
